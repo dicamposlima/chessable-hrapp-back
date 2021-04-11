@@ -45,8 +45,8 @@ class Employee extends \App\Models\Model
             (employees.name LIKE '{$filter}%' OR employees.position LIKE '{$filter}%' OR 
             employees.salary LIKE '{$filter}%' OR departments.name LIKE '{$filter}%') ";
         }
-        $query .= " ORDER BY employees.name, departments.name LIMIT ".self::LIST_DEFAULT_LIMIT." OFFSET ?";
-        return \Illuminate\Support\Facades\DB::select($query, [$offset]);
+        $query .= " ORDER BY employees.id LIMIT ? OFFSET ?";
+        return \Illuminate\Support\Facades\DB::select($query, [self::LIST_DEFAULT_LIMIT, $offset]);
     }
 
     /**

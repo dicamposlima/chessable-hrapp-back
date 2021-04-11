@@ -73,8 +73,8 @@ class Department extends \App\Models\Model
             $query .= " AND
             (name LIKE '{$filter}%' OR description LIKE '{$filter}%' ";
         }
-        $query .= " ORDER BY name LIMIT ".self::LIST_DEFAULT_LIMIT." OFFSET ?";
-        return \Illuminate\Support\Facades\DB::select($query, [$offset]);
+        $query .= " ORDER BY name LIMIT ? OFFSET ?";
+        return \Illuminate\Support\Facades\DB::select($query, [self::LIST_DEFAULT_LIMIT, $offset]);
     }
 
     /**
