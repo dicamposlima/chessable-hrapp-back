@@ -16,14 +16,16 @@ class EmployeesController extends Controller
     /**
      * List of employees
      *
+     * @param \Illuminate\Http\Request $request
+     * 
      * @return \Illuminate\Http\JsonResponse
      */
-    public function list(): \Illuminate\Http\JsonResponse
+    public function list(\Illuminate\Http\Request $request): \Illuminate\Http\JsonResponse
     {
         try {
             return new \Illuminate\Http\JsonResponse([
                     'status' => 200,
-                    'employees' => \App\Models\Employee::list(),
+                    'employees' => \App\Models\Employee::list($request),
                 ], 200);
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error($e);
