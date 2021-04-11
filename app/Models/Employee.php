@@ -29,7 +29,7 @@ class Employee extends \Illuminate\Database\Eloquent\Model
     {
         return \Illuminate\Support\Facades\DB::select(
             "SELECT employees.id, employees.name, employees.position, employees.salary,
-            DATE_FORMAT(employees.hiring_date, '%d/%m/%Y') AS hiring_date,
+            employees.hiring_date AS hiring_date,
             employees.status,
             departments.name AS department_name
             FROM employees
@@ -73,6 +73,7 @@ class Employee extends \Illuminate\Database\Eloquent\Model
             $request->get('salary'), $request->get('hiring_date'), \Carbon\Carbon::now(), \Carbon\Carbon::now()]
         );
     }
+
     /**
      * Update the employee data
      *
