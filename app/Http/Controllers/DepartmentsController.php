@@ -60,14 +60,16 @@ class DepartmentsController extends Controller
     /**
      * List of departments
      *
+     * @param \Illuminate\Http\Request $request
+     * 
      * @return \Illuminate\Http\JsonResponse
      */
-    public function list(): \Illuminate\Http\JsonResponse
+    public function list(\Illuminate\Http\Request $request): \Illuminate\Http\JsonResponse
     {
         try {
             return new \Illuminate\Http\JsonResponse([
                     'status' => 200,
-                    'departments' => \App\Models\Department::list(),
+                    'departments' => \App\Models\Department::list($request),
                 ], 200);
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error($e);
