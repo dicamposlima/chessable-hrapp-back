@@ -21,21 +21,37 @@ class Employee extends \Illuminate\Database\Eloquent\Model
     ];
 
     /**
+     * @var int
+     */
+    public const LIST_DEFAULT_LIMIT = 1;
+
+    /**
      * List of employees
      *
+     * @param \Illuminate\Http\Request $request
+     * 
      * @return array
      */
-    public static function list(): array
+    public static function list(\Illuminate\Http\Request $request): array
     {
-        return \Illuminate\Support\Facades\DB::select(
-            "SELECT employees.id, employees.name, employees.position, employees.salary,
-            employees.hiring_date AS hiring_date,
-            employees.status,
-            departments.name AS department_name
-            FROM employees
-            INNER JOIN departments ON departments.id = employees.id_department
-            WHERE employees.deleted_at IS NULL ORDER BY employees.name"
-        );
+        $offset = $request->get('offset', 0);
+        $filter = $request->get('filter', null);
+
+        $query = "SELECT employees.id, employees.name, employees.position, employees.salary,
+        employees.hiring_date AS hiring_date, employees.status, departments.name AS department_name
+        FROM employees
+        INNER JOIN departments ON departments.id = employees.id_department
+        WHERE employees.deleted_at IS NULL ";
+        
+        if($filter){
+            $offset = 0;
+            $filter = filter_var($filter);
+            $query .= " AND
+            (employees.name LIKE '{$filter}%' OR employees.position LIKE '{$filter}%' OR 
+            employees.salary LIKE '{$filter}%' OR departments.name LIKE '{$filter}%') ";
+        }
+        $query .= " ORDER BY employees.name ASC, departments.name LIMIT ".self::LIST_DEFAULT_LIMIT." OFFSET ?";
+        return \Illuminate\Support\Facades\DB::select($query, [$offset]);
     }
 
     /**
