@@ -27,8 +27,7 @@ class Department extends \App\Models\Model
         $filter = self::getCleanFilter($request);
         $query = "SELECT COUNT(id) AS total FROM departments WHERE deleted_at IS NULL";
         if($filter){
-            $query .= " AND
-            (name LIKE '%{$filter}%' OR description LIKE '%{$filter}%') ";
+            $query .= " AND (name LIKE '%{$filter}%' OR description LIKE '%{$filter}%') ";
         }
         $result = \Illuminate\Support\Facades\DB::select($query);
         return $result ? $result[0]->total : 0;
@@ -88,7 +87,7 @@ class Department extends \App\Models\Model
         if($filter){
             $offset = 0;
             $query .= " AND
-            (name LIKE '%{$filter}%' OR description LIKE '%{$filter}%' ";
+            (name LIKE '%{$filter}%' OR description LIKE '%{$filter}%') ";
         }
         $query .= " ORDER BY name LIMIT ? OFFSET ?";
         return \Illuminate\Support\Facades\DB::select($query, [self::LIST_DEFAULT_LIMIT, $offset]);
