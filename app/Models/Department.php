@@ -54,7 +54,7 @@ class Department extends \App\Models\Model
                 GROUP BY departments.id
                 HAVING (SELECT COUNT(employees.id) FROM employees
                 WHERE employees.id_department = departments.id AND salary >= ?) > ?
-                ORDER BY name", [$request->get('salary'), $request->get('employees')]
+                ORDER BY name", [$request->get('salary'), $request->get('salary'), $request->get('employees')]
             );
         }
         return [];        
