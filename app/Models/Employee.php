@@ -33,7 +33,7 @@ class Employee extends \App\Models\Model
         if($filter){
             $query .= " AND
             (employees.name LIKE '{$filter}%' OR employees.position LIKE '{$filter}%' OR 
-            employees.salary = '{$filter}' OR employees.status LIKE '{$filter}%') ";
+            employees.status LIKE '{$filter}%') ";
         }
         $result = \Illuminate\Support\Facades\DB::select($query);
         return $result ? $result[0]->total : 0;
@@ -61,8 +61,7 @@ class Employee extends \App\Models\Model
             $offset = 0;
             $query .= " AND
             (employees.name LIKE '{$filter}%' OR employees.position LIKE '{$filter}%' OR 
-            employees.salary = '{$filter}' OR departments.name LIKE '{$filter}%' OR
-            employees.status LIKE '{$filter}%') ";
+            departments.name LIKE '{$filter}%' OR employees.status LIKE '{$filter}%') ";
         }
         $query .= " ORDER BY employees.name, departments.name LIMIT ? OFFSET ?";
         return \Illuminate\Support\Facades\DB::select($query, [self::LIST_DEFAULT_LIMIT, $offset]);
