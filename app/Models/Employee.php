@@ -47,6 +47,8 @@ class Employee extends \App\Models\Model
     public static function list(\Illuminate\Http\Request $request): array
     {
         $offset = $request->get('offset', 0);
+        $order_field = $request->get('order_field', 'employees.name');
+        $order_dir = $request->get('order_dir', 'ASC');
         $filter = self::getCleanFilter($request);
 
         $query = "SELECT employees.id, employees.name, employees.position, employees.salary,
@@ -61,7 +63,7 @@ class Employee extends \App\Models\Model
             (employees.name LIKE '%{$filter}%' OR employees.position LIKE '%{$filter}%' OR
             departments.name LIKE '%{$filter}%') ";
         }
-        $query .= " ORDER BY employees.name, departments.name LIMIT ? OFFSET ?";
+        $query .= " ORDER BY {$order_field} {$order_dir}, departments.name LIMIT ? OFFSET ?";
         return \Illuminate\Support\Facades\DB::select($query, [self::LIST_DEFAULT_LIMIT, $offset]);
     }
 

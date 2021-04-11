@@ -84,6 +84,8 @@ class Department extends \App\Models\Model
     public static function list(\Illuminate\Http\Request $request): array
     {
         $offset = $request->get('offset', 0);
+        $order_field = $request->get('order_field', 'name');
+        $order_dir = $request->get('order_dir', 'ASC');
         $filter = self::getCleanFilter($request);
 
         $query = "SELECT id, name, description FROM departments WHERE deleted_at IS NULL ";
@@ -92,8 +94,11 @@ class Department extends \App\Models\Model
             $query .= " AND
             (name LIKE '%{$filter}%' OR description LIKE '%{$filter}%' ";
         }
-        $query .= " ORDER BY name LIMIT ? OFFSET ?";
-        return \Illuminate\Support\Facades\DB::select($query, [self::LIST_DEFAULT_LIMIT, $offset]);
+        $query .= " ORDER BY {$order_field} {$order_dir} LIMIT ? OFFSET ?";
+        return \Illuminate\Support\Facades\DB::select(
+            $query,
+            [self::LIST_DEFAULT_LIMIT, $offset]
+        );
     }
 
     /**
