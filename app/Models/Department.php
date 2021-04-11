@@ -25,9 +25,7 @@ class Department extends \App\Models\Model
     public static function count(\Illuminate\Http\Request $request): int
     {
         $filter = self::getCleanFilter($request);
-        $query = \Illuminate\Support\Facades\DB::select(
-            "SELECT COUNT(id) AS total FROM departments WHERE deleted_at IS NULL"
-        );
+        $query = "SELECT COUNT(id) AS total FROM departments WHERE deleted_at IS NULL";
         if($filter){
             $query .= " AND
             (name LIKE '{$filter}%' OR description LIKE '{$filter}%') ";

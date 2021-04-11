@@ -29,9 +29,7 @@ class Employee extends \App\Models\Model
     public static function count(\Illuminate\Http\Request $request): int
     {
         $filter = self::getCleanFilter($request);
-        $query = \Illuminate\Support\Facades\DB::select(
-            "SELECT COUNT(id) AS total FROM employees WHERE deleted_at IS NULL"
-        );
+        $query = "SELECT COUNT(id) AS total FROM employees WHERE deleted_at IS NULL";
         if($filter){
             $query .= " AND
             (employees.name LIKE '{$filter}%' OR employees.position LIKE '{$filter}%' OR 
