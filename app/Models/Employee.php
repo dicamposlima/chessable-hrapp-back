@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class Employee extends \Illuminate\Database\Eloquent\Model
+class Employee extends \App\Models\Model
 {
     use \Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -19,11 +19,6 @@ class Employee extends \Illuminate\Database\Eloquent\Model
         'updated_at',
         'deleted_at',
     ];
-
-    /**
-     * @var int
-     */
-    public const LIST_DEFAULT_LIMIT = 1;
 
     /**
      * List of employees
@@ -50,7 +45,7 @@ class Employee extends \Illuminate\Database\Eloquent\Model
             (employees.name LIKE '{$filter}%' OR employees.position LIKE '{$filter}%' OR 
             employees.salary LIKE '{$filter}%' OR departments.name LIKE '{$filter}%') ";
         }
-        $query .= " ORDER BY employees.name ASC, departments.name LIMIT ".self::LIST_DEFAULT_LIMIT." OFFSET ?";
+        $query .= " ORDER BY employees.name, departments.name LIMIT ".self::LIST_DEFAULT_LIMIT." OFFSET ?";
         return \Illuminate\Support\Facades\DB::select($query, [$offset]);
     }
 

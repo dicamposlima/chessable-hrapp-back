@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class Department extends \Illuminate\Database\Eloquent\Model
+class Department extends \App\Models\Model
 {
     use \Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -57,13 +57,24 @@ class Department extends \Illuminate\Database\Eloquent\Model
     /**
      * List of departments
      *
+     * @param \Illuminate\Http\Request $request
+     * 
      * @return array
      */
-    public static function list(): array
+    public static function list(\Illuminate\Http\Request $request): array
     {
-        return \Illuminate\Support\Facades\DB::select(
-            "SELECT id, name, description FROM departments WHERE deleted_at IS NULL ORDER BY name"
-        );
+        $offset = $request->get('offset', 0);
+        $filter = $request->get('filter', null);
+
+        $query = "SELECT id, name, description FROM departments WHERE deleted_at IS NULL ";
+        if($filter){
+            $offset = 0;
+            $filter = filter_var($filter);
+            $query .= " AND
+            (name LIKE '{$filter}%' OR description LIKE '{$filter}%' ";
+        }
+        $query .= " ORDER BY name LIMIT ".self::LIST_DEFAULT_LIMIT." OFFSET ?";
+        return \Illuminate\Support\Facades\DB::select($query, [$offset]);
     }
 
     /**
