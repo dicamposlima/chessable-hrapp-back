@@ -69,7 +69,8 @@ class DepartmentsController extends Controller
         try {
             return new \Illuminate\Http\JsonResponse([
                     'status' => 200,
-                    'departments' => \App\Models\Department::list($request),
+                    'total' => \App\Models\Department::count(),
+                    'departments' => \App\Models\Department::list($request)
                 ], 200);
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error($e);

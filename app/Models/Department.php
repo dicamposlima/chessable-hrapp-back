@@ -17,6 +17,19 @@ class Department extends \App\Models\Model
     ];
 
     /**
+     * Count total departments
+     * 
+     * @return array
+     */
+    public static function count(): int
+    {
+         $result = \Illuminate\Support\Facades\DB::select(
+            "SELECT COUNT(id) AS total FROM departments WHERE deleted_at IS NULL"
+        );
+        return $result ? $result[0]->total : 0;
+    }
+
+    /**
      * List of departments along with the highest salary
      *
      * @param \Illuminate\Http\Request $request

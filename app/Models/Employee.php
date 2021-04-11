@@ -21,6 +21,19 @@ class Employee extends \App\Models\Model
     ];
 
     /**
+     * Count total employees
+     * 
+     * @return array
+     */
+    public static function count(): int
+    {
+         $result = \Illuminate\Support\Facades\DB::select(
+            "SELECT COUNT(id) AS total FROM employees WHERE deleted_at IS NULL"
+        );
+        return $result ? $result[0]->total : 0;
+    }
+
+    /**
      * List of employees
      *
      * @param \Illuminate\Http\Request $request
@@ -45,7 +58,7 @@ class Employee extends \App\Models\Model
             (employees.name LIKE '{$filter}%' OR employees.position LIKE '{$filter}%' OR 
             employees.salary LIKE '{$filter}%' OR departments.name LIKE '{$filter}%') ";
         }
-        $query .= " ORDER BY employees.id LIMIT ? OFFSET ?";
+        $query .= " ORDER BY employees.name, departments.name LIMIT ? OFFSET ?";
         return \Illuminate\Support\Facades\DB::select($query, [self::LIST_DEFAULT_LIMIT, $offset]);
     }
 
