@@ -31,7 +31,7 @@ class Employee extends \App\Models\Model
         $filter = self::getCleanFilter($request);
         $query = "SELECT COUNT(id) AS total FROM employees WHERE deleted_at IS NULL";
         if($filter){
-            $query .= " AND (employees.name LIKE '{$filter}%' OR employees.position LIKE '{$filter}%') ";
+            $query .= " AND (employees.name LIKE '%{$filter}%' OR employees.position LIKE '%{$filter}%') ";
         }
         $result = \Illuminate\Support\Facades\DB::select($query);
         return $result ? $result[0]->total : 0;
@@ -58,8 +58,8 @@ class Employee extends \App\Models\Model
         if($filter){
             $offset = 0;
             $query .= " AND
-            (employees.name LIKE '{$filter}%' OR employees.position LIKE '{$filter}%' OR
-            departments.name LIKE '{$filter}%') ";
+            (employees.name LIKE '%{$filter}%' OR employees.position LIKE '%{$filter}%' OR
+            departments.name LIKE '%{$filter}%') ";
         }
         $query .= " ORDER BY employees.name, departments.name LIMIT ? OFFSET ?";
         return \Illuminate\Support\Facades\DB::select($query, [self::LIST_DEFAULT_LIMIT, $offset]);
