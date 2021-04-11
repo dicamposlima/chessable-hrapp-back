@@ -33,7 +33,7 @@ class Employee extends \App\Models\Model
         if($filter){
             $query .= " AND
             (employees.name LIKE '{$filter}%' OR employees.position LIKE '{$filter}%' OR 
-            employees.salary LIKE '{$filter}%' OR departments.name LIKE '{$filter}%') ";
+            employees.salary LIKE '{$filter}%' OR employees.status LIKE '{$filter}%') ";
         }
         $result = \Illuminate\Support\Facades\DB::select($query);
         return $result ? $result[0]->total : 0;
