@@ -46,11 +46,13 @@ class Department extends \App\Models\Model
             return \Illuminate\Support\Facades\DB::select(
                 "SELECT
                 departments.id, departments.name,
-                (SELECT COUNT(employees.id) FROM chessable.employees
+                (SELECT COUNT(employees.id) FROM employees
                 WHERE employees.id_department = departments.id AND salary >= ?) AS x_employees_x_salary
-                FROM chessable.departments
-                WHERE deleted_at IS NULL 
-                HAVING x_employees_x_salary > ?
+                FROM departments
+                WHERE deleted_at IS NULL
+                GROUP BY departments.id
+                HAVING (SELECT COUNT(employees.id) FROM employees
+                WHERE employees.id_department = departments.id AND salary >= ?) > ?
                 ORDER BY name", [$request->get('salary'), $request->get('employees')]
             );
         }
@@ -66,7 +68,7 @@ class Department extends \App\Models\Model
     {
         return \Illuminate\Support\Facades\DB::select(
             "SELECT id, name,
-            (SELECT IFNULL(MAX(salary), 0) FROM employees WHERE employees.id_department = departments.id) AS highest_salary
+            (SELECT MAX(salary) FROM employees WHERE employees.id_department = departments.id) AS highest_salary
             FROM departments WHERE deleted_at IS NULL ORDER BY name"
         );
     }
