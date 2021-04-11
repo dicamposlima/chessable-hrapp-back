@@ -22,14 +22,22 @@ class Employee extends \App\Models\Model
 
     /**
      * Count total employees
-     * 
-     * @return array
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return integer
      */
-    public static function count(): int
+    public static function count(\Illuminate\Http\Request $request): int
     {
-         $result = \Illuminate\Support\Facades\DB::select(
+        $filter = self::getCleanFilter($request);
+        $query = \Illuminate\Support\Facades\DB::select(
             "SELECT COUNT(id) AS total FROM employees WHERE deleted_at IS NULL"
         );
+        if($filter){
+            $query .= " AND
+            (employees.name LIKE '{$filter}%' OR employees.position LIKE '{$filter}%' OR 
+            employees.salary LIKE '{$filter}%' OR departments.name LIKE '{$filter}%') ";
+        }
+        $result = \Illuminate\Support\Facades\DB::select($query);
         return $result ? $result[0]->total : 0;
     }
 
@@ -43,7 +51,7 @@ class Employee extends \App\Models\Model
     public static function list(\Illuminate\Http\Request $request): array
     {
         $offset = $request->get('offset', 0);
-        $filter = $request->get('filter', null);
+        $filter = self::getCleanFilter($request);
 
         $query = "SELECT employees.id, employees.name, employees.position, employees.salary,
         employees.hiring_date AS hiring_date, employees.status, departments.name AS department_name
@@ -53,10 +61,10 @@ class Employee extends \App\Models\Model
         
         if($filter){
             $offset = 0;
-            $filter = filter_var($filter);
             $query .= " AND
             (employees.name LIKE '{$filter}%' OR employees.position LIKE '{$filter}%' OR 
-            employees.salary LIKE '{$filter}%' OR departments.name LIKE '{$filter}%') ";
+            employees.salary LIKE '{$filter}%' OR departments.name LIKE '{$filter}%' OR
+            employees.status LIKE '{$filter}%') ";
         }
         $query .= " ORDER BY employees.name, departments.name LIMIT ? OFFSET ?";
         return \Illuminate\Support\Facades\DB::select($query, [self::LIST_DEFAULT_LIMIT, $offset]);

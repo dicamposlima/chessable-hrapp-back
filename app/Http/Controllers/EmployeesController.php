@@ -25,8 +25,8 @@ class EmployeesController extends Controller
         try {
             return new \Illuminate\Http\JsonResponse([
                     'status' => 200,
-                    'total' => \App\Models\Employee::count(),
-                    'employees' => \App\Models\Employee::list($request),                    
+                    'total' => \App\Models\Employee::count($request),
+                    'employees' => \App\Models\Employee::list($request),
                 ], 200);
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error($e);

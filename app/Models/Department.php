@@ -18,14 +18,21 @@ class Department extends \App\Models\Model
 
     /**
      * Count total departments
-     * 
-     * @return array
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return integer
      */
-    public static function count(): int
+    public static function count(\Illuminate\Http\Request $request): int
     {
-         $result = \Illuminate\Support\Facades\DB::select(
+        $filter = self::getCleanFilter($request);
+        $query = \Illuminate\Support\Facades\DB::select(
             "SELECT COUNT(id) AS total FROM departments WHERE deleted_at IS NULL"
         );
+        if($filter){
+            $query .= " AND
+            (name LIKE '{$filter}%' OR description LIKE '{$filter}%') ";
+        }
+        $result = \Illuminate\Support\Facades\DB::select($query);
         return $result ? $result[0]->total : 0;
     }
 
@@ -77,12 +84,11 @@ class Department extends \App\Models\Model
     public static function list(\Illuminate\Http\Request $request): array
     {
         $offset = $request->get('offset', 0);
-        $filter = $request->get('filter', null);
+        $filter = self::getCleanFilter($request);
 
         $query = "SELECT id, name, description FROM departments WHERE deleted_at IS NULL ";
         if($filter){
             $offset = 0;
-            $filter = filter_var($filter);
             $query .= " AND
             (name LIKE '{$filter}%' OR description LIKE '{$filter}%' ";
         }
