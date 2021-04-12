@@ -5,6 +5,7 @@ namespace App\Models;
 class Department extends \App\Models\Model
 {
     use \Illuminate\Database\Eloquent\SoftDeletes;
+    use \Illuminate\Database\Eloquent\Factories\HasFactory;
 
     protected $table = 'departments';
     

@@ -88,9 +88,9 @@ class EmployeesController extends Controller
             throw new \Exception("Error adding data, please try again soon.");
         } catch (\Illuminate\Validation\ValidationException $e) {
             return new \Illuminate\Http\JsonResponse([
-                'status' => 422,
+                'status' => 405,
                 'messages' => "The form is invalid",
-            ], 422);
+            ], 405);
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error($e);
             return new \Illuminate\Http\JsonResponse([
@@ -129,9 +129,9 @@ class EmployeesController extends Controller
         } catch (\Illuminate\Validation\ValidationException $e) {
             \Illuminate\Support\Facades\Log::error($e);
             return new \Illuminate\Http\JsonResponse([
-                'status' => 422,
+                'status' => 405,
                 'messages' => "The form is invalid",
-            ], 422);
+            ], 405);
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error($e);
             return new \Illuminate\Http\JsonResponse([
@@ -157,6 +157,10 @@ class EmployeesController extends Controller
                     'messages' => "Deleted successfully"
                 ], 200);
             }
+            return new \Illuminate\Http\JsonResponse([
+                'status' => 404,
+                'messages' => "Employee not found"
+            ], 404);
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error($e);
             return new \Illuminate\Http\JsonResponse([

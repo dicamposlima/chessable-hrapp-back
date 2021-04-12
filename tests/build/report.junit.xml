@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="" tests="14" assertions="97" errors="0" warnings="0" failures="0" skipped="0" time="5.274371">
+    <testsuite name="Application Test Suite" tests="14" assertions="97" errors="0" warnings="0" failures="0" skipped="0" time="5.274371">
+      <testsuite name="DepartmentsTest" file="C:\diego\github\chessable\chessable-hrapp-back\tests\DepartmentsTest.php" tests="8" assertions="55" errors="0" warnings="0" failures="0" skipped="0" time="3.256675">
+        <testcase name="testDepartmentsListHighestSalary" class="DepartmentsTest" classname="DepartmentsTest" file="C:\diego\github\chessable\chessable-hrapp-back\tests\DepartmentsTest.php" line="25" assertions="8" time="0.970732"/>
+        <testcase name="testDepartmentsListWithFilter" class="DepartmentsTest" classname="DepartmentsTest" file="C:\diego\github\chessable\chessable-hrapp-back\tests\DepartmentsTest.php" line="123" assertions="5" time="0.388485"/>
+        <testcase name="testDepartmentsEmptyList" class="DepartmentsTest" classname="DepartmentsTest" file="C:\diego\github\chessable\chessable-hrapp-back\tests\DepartmentsTest.php" line="218" assertions="4" time="0.276256"/>
+        <testcase name="testDepartmentsList" class="DepartmentsTest" classname="DepartmentsTest" file="C:\diego\github\chessable\chessable-hrapp-back\tests\DepartmentsTest.php" line="232" assertions="12" time="0.317580"/>
+        <testcase name="testDepartmentsDetails" class="DepartmentsTest" classname="DepartmentsTest" file="C:\diego\github\chessable\chessable-hrapp-back\tests\DepartmentsTest.php" line="273" assertions="3" time="0.314240"/>
+        <testcase name="testDepartmentsAddItem" class="DepartmentsTest" classname="DepartmentsTest" file="C:\diego\github\chessable\chessable-hrapp-back\tests\DepartmentsTest.php" line="302" assertions="2" time="0.276585"/>
+        <testcase name="testDepartmentsEditItem" class="DepartmentsTest" classname="DepartmentsTest" file="C:\diego\github\chessable\chessable-hrapp-back\tests\DepartmentsTest.php" line="327" assertions="9" time="0.356259"/>
+        <testcase name="testDepartmentsRemoveItem" class="DepartmentsTest" classname="DepartmentsTest" file="C:\diego\github\chessable\chessable-hrapp-back\tests\DepartmentsTest.php" line="400" assertions="12" time="0.356537"/>
+      </testsuite>
+      <testsuite name="EmployeesTest" file="C:\diego\github\chessable\chessable-hrapp-back\tests\EmployeesTest.php" tests="6" assertions="42" errors="0" warnings="0" failures="0" skipped="0" time="2.017696">
+        <testcase name="testEmployeesEmptyList" class="EmployeesTest" classname="EmployeesTest" file="C:\diego\github\chessable\chessable-hrapp-back\tests\EmployeesTest.php" line="25" assertions="4" time="0.305194"/>
+        <testcase name="testEmployeesList" class="EmployeesTest" classname="EmployeesTest" file="C:\diego\github\chessable\chessable-hrapp-back\tests\EmployeesTest.php" line="39" assertions="12" time="0.336469"/>
+        <testcase name="testEmployeesDetails" class="EmployeesTest" classname="EmployeesTest" file="C:\diego\github\chessable\chessable-hrapp-back\tests\EmployeesTest.php" line="93" assertions="3" time="0.315128"/>
+        <testcase name="testEmployeesAddItem" class="EmployeesTest" classname="EmployeesTest" file="C:\diego\github\chessable\chessable-hrapp-back\tests\EmployeesTest.php" line="135" assertions="2" time="0.332761"/>
+        <testcase name="testEmployeesEditItem" class="EmployeesTest" classname="EmployeesTest" file="C:\diego\github\chessable\chessable-hrapp-back\tests\EmployeesTest.php" line="168" assertions="9" time="0.331923"/>
+        <testcase name="testEmployeesRemoveItem" class="EmployeesTest" classname="EmployeesTest" file="C:\diego\github\chessable\chessable-hrapp-back\tests\EmployeesTest.php" line="282" assertions="12" time="0.396222"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>
