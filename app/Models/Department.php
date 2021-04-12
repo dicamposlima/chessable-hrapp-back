@@ -82,9 +82,9 @@ class Department extends \App\Models\Model
      */
     public static function list(\Illuminate\Http\Request $request): array
     {
-        $offset = $request->get('offset', 0);
-        $order_field = $request->get('order_field', 'name');
-        $order_dir = $request->get('order_dir', 'ASC');
+        $offset = $request->get('offset') ? $request->get('offset') :  0;
+        $order_field = $request->get('order_field') ? $request->get('order_field') : 'name';
+        $order_dir = $request->get('order_dir') ? $request->get('order_dir'): 'ASC';
         $filter = self::getCleanFilter($request);
 
         $query = "SELECT id, name, description FROM departments WHERE deleted_at IS NULL ";

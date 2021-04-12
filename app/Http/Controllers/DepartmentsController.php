@@ -73,7 +73,6 @@ class DepartmentsController extends Controller
                     'departments' => \App\Models\Department::list($request)
                 ], 200);
         } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error($e);
             return new \Illuminate\Http\JsonResponse([
                     'status' => 404,
                     'departments' => [],

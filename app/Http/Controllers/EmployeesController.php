@@ -29,6 +29,7 @@ class EmployeesController extends Controller
                     'employees' => \App\Models\Employee::list($request),
                 ], 200);
         } catch (\Exception $e) {
+            dd($e->getMessage());
             \Illuminate\Support\Facades\Log::error($e);
             return new \Illuminate\Http\JsonResponse([
                     'status' => 404,

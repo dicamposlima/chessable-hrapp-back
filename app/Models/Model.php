@@ -17,7 +17,9 @@ class Model extends \Illuminate\Database\Eloquent\Model
      */
     public static function getCleanFilter(\Illuminate\Http\Request $request): string
     {
-        $filter = $request->get('filter', null);
-        return filter_var(trim($filter));
+        if($filter = $request->get('filter', null)){
+            return filter_var(trim($filter));
+        }
+        return "";
     }
 }
